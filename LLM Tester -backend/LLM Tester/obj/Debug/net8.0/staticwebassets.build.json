@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "nfpGnnTiLGpI5dC5x0OQzn9mKDWVTeN9VSg9Pd3gboo=",
+  "Source": "LLM Tester",
+  "BasePath": "_content/LLM Tester",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
