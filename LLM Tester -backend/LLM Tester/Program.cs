@@ -1,9 +1,25 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// var connectionString = "host=localhost;user=LLMTester;password=LLMTester;database=llm_tester";
+// var serverVersion = new MySqlServerVersion(new Version(9, 0, 1));
+// builder.Services.AddDbContext<>
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddCors( options => 
+{
+    options.AddPolicy("AllowReactApp",
+        builder => 
+        {
+            builder.WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -15,6 +31,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 var summaries = new[]
 {

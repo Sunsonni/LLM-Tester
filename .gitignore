@@ -396,3 +396,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+#Additional folders
+bin/
+obj/
+LLM Tester/bin/
+LLM Tester/obj/
