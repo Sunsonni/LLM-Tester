@@ -1,6 +1,18 @@
 .topNav{
-    
-    
-    
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   padding: 20px;
+   border: 2px solid green;
+   
+}
+
+.headerLink{
+  border: 2px solid pink;
+  margin: 6px;
+  padding: 6px;
+  border-radius: 15px;
+  color: rgb(150, 5, 247);
+  background-color: pink;
 }
 

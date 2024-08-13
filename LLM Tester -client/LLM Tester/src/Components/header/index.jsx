@@ -1,4 +1,5 @@
 import "./headerStyles.css"
+import '../../App.css';
 
 const Header = () => {
     return (

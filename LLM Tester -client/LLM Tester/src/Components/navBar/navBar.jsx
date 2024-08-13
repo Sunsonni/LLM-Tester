@@ -10,9 +10,9 @@ return(
     
     <div className="sidenav">
         
-        <a href="#section">About</a>
-        <a href="#section">Services</a>
-        <a href="#section">Contact</a>
+        <a href="#section" className='headerLink'>Episode Info </a>
+        <a href="#section" className='headerLink'>Community </a>
+        <a href="#section" className='headerLink'>Support </a>
     </div>
     </div>
 );
