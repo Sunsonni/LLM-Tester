@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>LLM_Tester</RootNamespace>
+    <UserSecretsId>9ef514f3-07be-4265-8f2f-3709fc3d3328</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
