@@ -1,3 +1,5 @@
+using LLM_Tester.models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // var connectionString = "host=localhost;user=LLMTester;password=LLMTester;database=llm_tester";
@@ -6,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Configuration.AddUserSecrets<Program>();
+
 builder.Services.AddCors( options => 
 {
     options.AddPolicy("AllowReactApp",
@@ -17,9 +21,12 @@ builder.Services.AddCors( options =>
         });
 });
 
+// builder.Configuration.AddUserSecrets<Program>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddGemini(builder.Configuration);
+builder.Services.AddLogging();
 
 var app = builder.Build();
 
@@ -55,6 +62,8 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+app.MapControllers();
 
 app.Run();
 
