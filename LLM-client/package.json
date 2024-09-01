@@ -3,6 +3,7 @@
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
   "version": "1.0.0",
   "main": "vite.config.js",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
