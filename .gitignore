@@ -403,3 +403,5 @@ bin/
 obj/
 LLM Tester/bin/
 LLM Tester/obj/
+*.DS_Store
+.DS_Store
