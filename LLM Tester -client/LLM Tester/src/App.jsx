@@ -12,7 +12,6 @@ function App() {
   return (
     <>
     <SideNav name='Jonathan'/>
-    {/* <TesterFetch /> */}
     <GeminiTextInput />
    </>
   )
