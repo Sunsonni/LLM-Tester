@@ -5,14 +5,17 @@ import './App.css'
 import SideNav from './Components/navBar/navBar'
 import TesterFetch from './Components/TesterFetch'
 import GeminiTextInput from './Components/GeminiTextInput'
+import { Outlet, useLocation } from 'react-router-dom'
 
 function App() {
+  const location = useLocation();
   const [count, setCount] = useState(0)
 
   return (
     <>
-    <SideNav name='Jonathan'/>
+    <SideNav />
     <GeminiTextInput />
+    <Outlet/>
    </>
   )
 }
