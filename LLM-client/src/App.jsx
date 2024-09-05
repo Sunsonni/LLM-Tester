@@ -8,14 +8,14 @@ import GeminiTextInput from './Components/GeminiTextInput'
 import { Outlet, useLocation } from 'react-router-dom'
 
 function App() {
-  const location = useLocation();
-  const [count, setCount] = useState(0)
-
   return (
-    <>
+    <div className='layout'>
     <SideNav />
-    <Outlet/>
-   </>
+    
+    <div className='content'>
+      <Outlet/>
+    </div>
+   </div>
   )
 }
 

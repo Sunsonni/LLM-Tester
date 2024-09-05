@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../App.css';
 
-const SideNav = (props)=> {
+const SideNav = (props) => {
 return(
     <div className="sideNav">
         <a href="/">Home</a>
