@@ -1,4 +1,5 @@
 using LLM_Tester.models;
+using LLM_Tester.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddCors( options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddSingleton<IChatService, ChatService>();
 builder.Services.AddGemini(builder.Configuration);
 builder.Services.AddLogging();
 

@@ -1,6 +1,7 @@
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.Json;
+using LLM_Tester.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -8,6 +9,7 @@ namespace LLM_Tester.models;
 
 public sealed class GeminiClient
 {
+    private readonly IChatService _chatService;
     private readonly HttpClient _httpClient;
     private readonly ILogger<GeminiClient> _logger;
     private readonly JsonSerializerSettings _serializerSettings = new()
@@ -18,10 +20,11 @@ public sealed class GeminiClient
         }
     };
 
-    public GeminiClient(HttpClient httpClient, ILogger<GeminiClient> logger)
+    public GeminiClient(HttpClient httpClient, ILogger<GeminiClient> logger, IChatService chatService)
     {
         _httpClient = httpClient;
         _logger = logger;
+        _chatService = chatService;
     }
 
     public async Task<string> GenerateContentAsync(string prompt, CancellationToken cancellationToken)
@@ -40,6 +43,8 @@ public sealed class GeminiClient
         var geminiResponseText = geminiResponse?.Candidates[0].Content.Parts[0].Text;
 
         return geminiResponseText;
+
+
         }
         catch (Exception ex)
         {
@@ -47,8 +52,6 @@ public sealed class GeminiClient
             throw;
         }
         
-       
-
-        
     }
+
 }
