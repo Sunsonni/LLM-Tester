@@ -24,10 +24,10 @@ internal sealed class GeminiRequestFactory
             ],
             GenerationConfig = new GenerationConfig 
             {
-                Temperature = 0,
+                Temperature = 1,
                 TopK = 1,
                 TopP = 1,
-                MaxOutputTokens = 2048,
+                MaxOutputTokens = 200,
                 StopSequences = new List<object>()
             },
             SafetySettings =

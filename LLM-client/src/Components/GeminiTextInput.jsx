@@ -27,17 +27,19 @@ const GeminiTextInput = () => {
        
     }
     return (
-        <div>
+        <div className='content-container'>
             <div style={{marginBottom: '20px' }}>
                 <h3>Response</h3>
                 <p>{response}</p>
             </div>
+            <div className='input-overlay'>
             <Form onSubmit={(e) => {e.preventDefault(); geminiFetch();}}>
                 <Input type="text" value={prompt} onChange={(e)=> setPrompt(e.target.value)} placeholder='Enter your prompt'/>
                 <Button type="submit" disabled={loading}>
                     {loading ? 'Loading...' : 'Submit'}
                 </Button>
             </Form>
+            </div>
         </div>
     )
 }

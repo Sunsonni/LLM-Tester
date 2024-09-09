@@ -59,7 +59,9 @@
 
 .layout {
   display: flex;
+  flex: 1;
   height: 100vh;
+  position: relative
 }
 
 .content {
@@ -69,4 +71,47 @@
   overflow-y: auto;
   background-color: white;
   height: 100vh; 
+}
+
+.content-container {
+  flex: 1; /* Take up remaining space */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: white;
+  padding: 20px;
+}
+
+.input-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #ccc;
+}
+
+.input-overlay input {
+  flex: 1;
+  width: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.input-overlay button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.input-overlay button:hover {
+  background-color: #0056b3;
 }
