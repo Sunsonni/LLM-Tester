@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from chat import initialize_chat_model
+from flask_cors import CORS
 
 app = Flask(__name__)
 model = initialize_chat_model()
+
+CORS(app, origins=["http://localhost:5173"])
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -10,7 +13,7 @@ def chat():
     data = request.get_json()
     user_input = data.get("message")
     
-    if not user_input:
+    if not user_input or not user_input.strip():
         return jsonify({"Error" : "Message is required"}), 400
     
     try:
@@ -25,4 +28,4 @@ def chat():
         
 
 if __name__== "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5280)

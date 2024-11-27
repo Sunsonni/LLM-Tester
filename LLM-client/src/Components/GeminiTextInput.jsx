@@ -9,15 +9,15 @@ const GeminiTextInput = () => {
     const geminiFetch = async () => {
         setLoading(true);
         try {
-            const geminiResponse = await fetch('http://localhost:5280/api/Gemini/generate', {
+            const geminiResponse = await fetch('http://127.0.0.1:5280/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(prompt)
+                body: JSON.stringify({message: prompt})
             });
-            const data = await geminiResponse.text();
-            setResponse(data);
+            const data = await geminiResponse.json();
+            setResponse(data.response || 'No response received');
         } catch (error) {
             setResponse('Error fetching reponse');
             console.error('Error: ', error);
