@@ -1,5 +1,7 @@
 import { Form, Input, Button } from 'reactstrap'
 import { useState } from 'react'
+import Chat from './Chat';
+import './TextInput.css'
 
 const GeminiTextInput = () => {
     const [ prompt, setPrompt ] = useState('');
@@ -32,13 +34,7 @@ const GeminiTextInput = () => {
         <div className='content-container'>
             <div style={{marginBottom: '20px', maxHeight: '300px', overflowY: 'auto'}}>
                 <h3>Chat</h3>
-                <ul>
-                    {history.map((entry, index) => {
-                        <li key={index}>
-                            <strong>{entry.role}</strong> {entry.message}
-                        </li>
-                    })}
-                </ul>
+               <Chat history={history}/>
             </div>
             <div style={{marginBottom: '20px' }}>
                 <h3>Response</h3>
@@ -51,7 +47,8 @@ const GeminiTextInput = () => {
                 }}
             >
                 <Input 
-                type="text" 
+                className='textarea'
+                type="textarea" 
                 value={prompt} 
                 onChange={(e)=> setPrompt(e.target.value)} placeholder='Enter your prompt'/>
                 <Button type="submit" disabled={loading}>
