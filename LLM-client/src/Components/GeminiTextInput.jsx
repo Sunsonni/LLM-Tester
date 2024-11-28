@@ -4,6 +4,7 @@ import { useState } from 'react'
 const GeminiTextInput = () => {
     const [ prompt, setPrompt ] = useState('');
     const [ response, setResponse ] = useState('');
+    const [ history, setHistory ] = useState([]); 
     const [ loading, setLoading ] = useState(false);
 
     const geminiFetch = async () => {
@@ -17,6 +18,7 @@ const GeminiTextInput = () => {
                 body: JSON.stringify({message: prompt})
             });
             const data = await geminiResponse.json();
+            setHistory(data.history || []);
             setResponse(data.response || 'No response received');
         } catch (error) {
             setResponse('Error fetching reponse');
@@ -28,13 +30,30 @@ const GeminiTextInput = () => {
     }
     return (
         <div className='content-container'>
+            <div style={{marginBottom: '20px', maxHeight: '300px', overflowY: 'auto'}}>
+                <h3>Chat</h3>
+                <ul>
+                    {history.map((entry, index) => {
+                        <li key={index}>
+                            <strong>{entry.role}</strong> {entry.message}
+                        </li>
+                    })}
+                </ul>
+            </div>
             <div style={{marginBottom: '20px' }}>
                 <h3>Response</h3>
                 <p>{response}</p>
             </div>
             <div className='input-overlay'>
-            <Form onSubmit={(e) => {e.preventDefault(); geminiFetch();}}>
-                <Input type="text" value={prompt} onChange={(e)=> setPrompt(e.target.value)} placeholder='Enter your prompt'/>
+            <Form onSubmit={(e) => {
+                e.preventDefault(); 
+                geminiFetch();
+                }}
+            >
+                <Input 
+                type="text" 
+                value={prompt} 
+                onChange={(e)=> setPrompt(e.target.value)} placeholder='Enter your prompt'/>
                 <Button type="submit" disabled={loading}>
                     {loading ? 'Loading...' : 'Submit'}
                 </Button>

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from chat import initialize_chat_model
 from flask_cors import CORS
+from database import get_db_connection, get_chat_history_from_db, save_to_chat_history
 
 app = Flask(__name__)
 model = initialize_chat_model()
@@ -17,12 +18,19 @@ def chat():
         return jsonify({"Error" : "Message is required"}), 400
     
     try:
+        #Fetch chat history
+        history = get_chat_history_from_db()
+        
         #start a chat session and get the response
-        chat_session = model.start_chat(history=[])
+        chat_session = model.start_chat(history=history)
         response = chat_session.send_message(user_input)
         
+        #save user input and model response
+        save_to_chat_history("user", [user_input])
+        save_to_chat_history("model", [response.text])
+        
         #return response as JSON
-        return jsonify({"response": response.text}), 200
+        return jsonify({"response": response.text, "history": history}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
         
