@@ -115,3 +115,58 @@
 .input-overlay button:hover {
   background-color: #0056b3;
 }
+.nav-container {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.sideNav {
+  width: 200px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.sideNav a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sideNav a:hover {
+  color: #f1f1f1;
+}
+
+.sideNav.closed {
+  transform: translateX(-100%);
+}
+
+.sideNav.open {
+  transform: translateX(0);
+}
+
+.toggle-button {
+  position: fixed;
+  top: 10px;
+  left: 10px; 
+  background-color: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 24px;
+}
+
+.toggle-button:hover {
+  background-color: #575757;
+}

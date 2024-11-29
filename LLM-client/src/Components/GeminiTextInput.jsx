@@ -1,13 +1,33 @@
 import { Form, Input, Button } from 'reactstrap'
-import { useState } from 'react'
+import { useState, useEffect, useRef} from 'react'
 import Chat from './Chat';
 import './TextInput.css'
 
 const GeminiTextInput = () => {
     const [ prompt, setPrompt ] = useState('');
-    const [ response, setResponse ] = useState('');
     const [ history, setHistory ] = useState([]); 
     const [ loading, setLoading ] = useState(false);
+    const chatContainerRef = useRef(null);
+
+    useEffect(() => {
+        const fetchHistory = async () => {
+            try {
+                const response = await fetch ('http://127.0.0.1:5280/chat-history');
+                const data = await response.json();
+                console.log("history set");
+                setHistory(data.history || []);
+            } catch (error) {
+                console.error('Error fetching chat history', error)
+            }
+        };
+        fetchHistory();
+    }, []);
+
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [history]);
 
     const geminiFetch = async () => {
         setLoading(true);
@@ -20,10 +40,14 @@ const GeminiTextInput = () => {
                 body: JSON.stringify({message: prompt})
             });
             const data = await geminiResponse.json();
-            setHistory(data.history || []);
-            setResponse(data.response || 'No response received');
+            const newHistory = [
+                ...history,
+                { role: 'user', message: prompt },
+                { role: 'model', message: data.response || 'No response received' }
+            ];
+            setHistory(newHistory);
+            setPrompt('');
         } catch (error) {
-            setResponse('Error fetching reponse');
             console.error('Error: ', error);
         } finally {
             setLoading(false);
@@ -32,13 +56,9 @@ const GeminiTextInput = () => {
     }
     return (
         <div className='content-container'>
-            <div style={{marginBottom: '20px', maxHeight: '300px', overflowY: 'auto'}}>
+            <div className='chat-container' ref={chatContainerRef}>
                 <h3>Chat</h3>
                <Chat history={history}/>
-            </div>
-            <div style={{marginBottom: '20px' }}>
-                <h3>Response</h3>
-                <p>{response}</p>
             </div>
             <div className='input-overlay'>
             <Form onSubmit={(e) => {
@@ -46,14 +66,16 @@ const GeminiTextInput = () => {
                 geminiFetch();
                 }}
             >
-                <Input 
-                className='textarea'
-                type="textarea" 
-                value={prompt} 
-                onChange={(e)=> setPrompt(e.target.value)} placeholder='Enter your prompt'/>
-                <Button type="submit" disabled={loading}>
-                    {loading ? 'Loading...' : 'Submit'}
-                </Button>
+                <div className='input-button-container'>
+                    <Input 
+                    className='textarea'
+                    type="textarea" 
+                    value={prompt} 
+                    onChange={(e)=> setPrompt(e.target.value)} placeholder='Enter your prompt'/>
+                    <Button type="submit" disabled={loading}>
+                        {loading ? 'Loading...' : 'Submit'}
+                    </Button>
+                </div>
             </Form>
             </div>
         </div>

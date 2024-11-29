@@ -33,7 +33,14 @@ def chat():
         return jsonify({"response": response.text, "history": history}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-        
+ 
+@app.route("/chat-history", methods=["GET"])       
+def get_chat_history():
+    try:
+        history = get_chat_history_from_db()
+        return jsonify({"history": history}),200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__== "__main__":
     app.run(debug=True, port=5280)
