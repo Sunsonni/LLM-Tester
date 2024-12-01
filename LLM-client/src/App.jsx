@@ -1,19 +1,19 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import SideNav from './Components/navBar/navBar'
-import TesterFetch from './Components/TesterFetch'
-import GeminiTextInput from './Components/GeminiTextInput'
 import { Outlet, useLocation } from 'react-router-dom'
 
 function App() {
-  return (
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+  return ( 
     <div className='layout'>
-    <SideNav />
-    
-    <div className='content'>
-      <Outlet/>
+    <SideNav isOpen={isNavOpen} toggleNav={toggleNav}/>
+    <div className={`content ${isNavOpen} ? 'shifted' : ''}`}>
+      <Outlet context={{ isNavOpen }}/>
     </div>
    </div>
   )

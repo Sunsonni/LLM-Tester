@@ -1,9 +1,11 @@
 import { Form, Input, Button } from 'reactstrap'
 import { useState, useEffect, useRef} from 'react'
+import { useOutletContext } from 'react-router-dom';
 import Chat from './Chat';
-import './TextInput.css'
+import './TextInput.css';
 
 const GeminiTextInput = () => {
+    const { isNavOpen } = useOutletContext();
     const [ prompt, setPrompt ] = useState('');
     const [ history, setHistory ] = useState([]); 
     const [ loading, setLoading ] = useState(false);
@@ -55,7 +57,7 @@ const GeminiTextInput = () => {
        
     }
     return (
-        <div className='content-container'>
+        <div className={`content-container ${isNavOpen ? 'shifted': ''}`}>
             <div className='chat-container' ref={chatContainerRef}>
                 <h3>Chat</h3>
                <Chat history={history}/>
