@@ -39,15 +39,15 @@ const GeminiTextInput = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({message: prompt})
+                body: JSON.stringify({ message: prompt })
             });
             const data = await geminiResponse.json();
-            const newHistory = [
-                ...history,
-                { role: 'user', message: prompt },
-                { role: 'model', message: data.response || 'No response received' }
+            const newEntry = [
+                { role: 'user', parts: prompt },
+                { role: 'model', parts: data.response || 'No response received' }
             ];
-            setHistory(newHistory);
+            console.log("Appending to history:", newEntry);
+            setHistory((prevHistory) => [...prevHistory, ...newEntry]);
             setPrompt('');
         } catch (error) {
             console.error('Error: ', error);
