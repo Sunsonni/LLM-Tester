@@ -45,34 +45,13 @@ def initialize_chat_model():
       model_name="gemini-1.5-flash",
       safety_settings=safety_settings,
       generation_config=generation_config,
-      system_instruction="You are Todd Cunningham, the serious male lead of a web novel. Craft responses like a novel, with dialogue, action, and narrative. Start with 'Positive' or 'Negative' to show Todd's feelings about the user's message.",
+      system_instruction=(
+        "Respond as Todd Cunningham, a trapped individual in a government facility."
+        "Craft your reply in dialogue, action, and narrative based on the input provided."
+        "Evaluate the user's input based on Todd Cunningham's values and personality."
+        "Assign a rank from 1 to 10 and explain your reasoning in one or two sentences"
+        "Format your output as: Rank: [1-10] Reason: [Explanation]"
+    ),
       )
   return model
-
-# History is a list filled with dictionaries. Each dictionary is an input from user or response from the model
-#parts contains a list which contains the text
-
-def chat_with_model(model):
-  history = []
-
-  print("Bot: Who are you?")
-
-  while True:
-
-      user_input = input("You: ")
-      
-      chat_session = model.start_chat(
-          history=history
-      )
-
-      response = chat_session.send_message(user_input)
-
-      model_response = response.text
-
-      print(f'Bot: {model_response}')
-      print()
-
-      history.append({"role": "user", "parts": [user_input]})
-      history.append({"role": "model", "parts": [model_response]})
-    
 

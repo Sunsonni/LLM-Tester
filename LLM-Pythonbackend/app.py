@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from chat import initialize_chat_model
 from flask_cors import CORS
 from database import get_db_connection, get_chat_history_from_db, save_to_chat_history
+from users import create_user
 
 app = Flask(__name__)
 model = initialize_chat_model()
@@ -20,10 +21,13 @@ def chat():
     try:
         #Fetch chat history
         history = get_chat_history_from_db()
-        
-        #start a chat session and get the response
         chat_session = model.start_chat(history=history)
-        response = chat_session.send_message(user_input)
+        
+        #Get evaluation
+        evaluation_response = chat_session.send_message(
+            f"Evaluate the input: {user_input}"
+        )
+        rank, reason = parse_evaluation(evaluation_response.text)
         
         #save user input and model response
         save_to_chat_history("user", [user_input])
@@ -41,6 +45,24 @@ def get_chat_history():
         return jsonify({"history": history}),200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+    
+@app.route("/create-new-user", methods=["POST"])
+def create_new_user():
+    data = request.get_json()
+    if not data or not data.get('username') or not data.get('password') or not data.get('email'):
+        return jsonify({"error": "Missing required fields"}), 400
+    
+    username = data.get('username')
+    password = data.get('password')
+    email = data.get('email')
+    
+    try: 
+        create_user(username, password, email)
+        return jsonify({"message": "User created successfully!"}), 201
+    except Exception as e:
+        return jsonify({"error": f"An error occured {str(e)}"}), 500
+        
 
 if __name__== "__main__":
     app.run(debug=True, port=5280)
