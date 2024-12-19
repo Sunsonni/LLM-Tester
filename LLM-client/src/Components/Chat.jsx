@@ -6,7 +6,8 @@ const Chat = ({ history }) => {
         <div className="chat-container">
             {history.map((entry, index) => (
                 <div key={index} className={`chat-message ${entry.role}`}>
-                    <strong>{entry.role}:</strong> {entry.parts}
+                    <strong style={{ textAlign: 'left' }}>{entry.role}:</strong>
+                    <div>{entry.parts}</div>
                 </div>
             ))}
         </div>
