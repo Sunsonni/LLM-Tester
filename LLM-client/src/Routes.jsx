@@ -16,6 +16,10 @@ const router = createBrowserRouter([
     {
         path: '/Input',
         element: <GeminiTextInput/>
+    },
+    {
+        path: '/Login',
+        element: <p>Login page here</p>
     }
     ]
 }

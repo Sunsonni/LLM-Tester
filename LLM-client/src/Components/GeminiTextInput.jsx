@@ -57,7 +57,6 @@ const GeminiTextInput = () => {
         } finally {
             setLoading(false);
         }
-       
     }
     return (
         <div className={`content-container ${isNavOpen ? 'shifted': ''}`}>
