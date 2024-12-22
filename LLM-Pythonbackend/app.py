@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
-from chat import initialize_chat_model
 from flask_cors import CORS
-from database import get_db_connection, get_chat_history_from_db, save_to_chat_history
+
+from chat import initialize_chat_model
+from database import get_db_connection, get_chat_history_from_db, save_to_chat_history, initialize_relationship, get_relationship_value, update_relationship_value, ensure_relationship_table_exists
 from users import create_user, authenticate_user
+
 import re
 
 app = Flask(__name__)
@@ -14,12 +16,15 @@ CORS(app, origins=["http://localhost:5173"])
 def chat():
     #parse user input from the resquest
     data = request.get_json()
+    user_id = data.get("user_id")
     user_input = data.get("message")
     
-    if not user_input or not user_input.strip():
+    if not user_id or not user_input or not user_input.strip():
         return jsonify({"Error" : "Message is required"}), 400
     
     try:
+        #
+        initialize_relationship(user_id)
         #Fetch chat history
         history = get_chat_history_from_db()
         chat_session = model.start_chat(history=history)
@@ -29,6 +34,8 @@ def chat():
             f"Evaluate the input: {user_input}"
         )
         rank, reason = parse_evaluation(evaluation_response.text)
+        
+        update_relationship_value(user_id, rank)
         
         #save user input and model response
         save_to_chat_history("user", [user_input])
@@ -78,6 +85,25 @@ def check_user():
     else:
         return jsonify({"error": "Invalid username or password"}), 401
     
+    
+@app.route("/get-relationship", methods=["GET"])
+def relationship():
+    data = request.get_json()
+    user_id = data.get("user_id")
+    character_name = data.get("character_name", "Todd Cunningham")
+    if not user_id:
+        return jsonify({"error": "User ID is requred"}), 400
+    try: 
+        relationship_value = get_relationship_value(user_id, character_name)
+        if relationship_value is None:
+            return jsonify ({"error": "No relationship found for this user"}), 404
+        return jsonify({"character_name": character_name, "relationship_value": relationship_value}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+        
+    
+    
+    
 def parse_evaluation(evaluation_text):
     rank_match = re.search(r"Rank: (\d+)", evaluation_text)
     reason_match = re.search(r"Reason: (.+)", evaluation_text)
@@ -88,7 +114,7 @@ def parse_evaluation(evaluation_text):
         return rank, reason
     else:
         return None, "Evaluation format is incorrect"
-        
 
 if __name__== "__main__":
+    ensure_relationship_table_exists()
     app.run(debug=True, port=5280)
