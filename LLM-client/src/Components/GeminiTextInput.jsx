@@ -39,7 +39,10 @@ const GeminiTextInput = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ message: prompt })
+                body: JSON.stringify({ 
+                    message: prompt,
+                    user_id: 1 
+                })
             });
             const data = await geminiResponse.json();
             const newEntry = [
