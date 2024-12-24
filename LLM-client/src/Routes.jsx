@@ -3,6 +3,8 @@ import App from "./App"
 import Home from "./Components/HomePage/Home"
 import ErrorPage from "./Components/ErrorPage/ErrorPage";
 import GeminiTextInput from "./Components/GeminiTextInput";
+import SignUp from "./Components/SignUp";
+
 const router = createBrowserRouter([
 {
     path: '/',
@@ -18,8 +20,8 @@ const router = createBrowserRouter([
         element: <GeminiTextInput/>
     },
     {
-        path: '/Login',
-        element: <p>Login page here</p>
+        path: '/SignUp',
+        element: <SignUp />
     }
     ]
 }
