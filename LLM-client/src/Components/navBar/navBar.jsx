@@ -11,7 +11,7 @@ return(
         <div className={`sideNav ${isOpen? 'open': 'closed'}`}>
             <a href="/">Home</a>
             <a href="/Input">Input</a>
-            <a href="/Login">Login</a>
+            <a href="/SignUp">Sign Up</a>
         </div>
     </div>
 );

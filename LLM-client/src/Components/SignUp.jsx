@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
     //username, password, email
+    const navigate= useNavigate();
   
         const [formData, setFormData] = useState({
             username: "",
@@ -34,8 +35,7 @@ const SignUp = () => {
             if(!response.ok) {
                 throw new Error(`HTTP error! Status ${response.status}`);
             }
-                const result = await response.json();
-                setResponseMessage(`Success! Response: ${JSON.stringify(result)}`);
+                navigate("/Success");
             } catch (error) {
                 setResponseMessage(`Error: ${error.message}`);
             }

@@ -22,6 +22,10 @@ const router = createBrowserRouter([
     {
         path: '/SignUp',
         element: <SignUp />
+    },
+    {
+        path: '/Success',
+        element: <p>Account successfully created</p>
     }
     ]
 }

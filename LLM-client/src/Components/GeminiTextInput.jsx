@@ -9,7 +9,9 @@ const GeminiTextInput = () => {
     const [ prompt, setPrompt ] = useState('');
     const [ history, setHistory ] = useState([]); 
     const [ loading, setLoading ] = useState(false);
+    const [ relationship, setRelationship ] = useState(null);
     const chatContainerRef = useRef(null);
+
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -30,6 +32,38 @@ const GeminiTextInput = () => {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
     }, [history]);
+
+    useEffect(()=> {
+        const fetchRelationship = async () => {
+            try {
+                const requestBody = {
+                    user_id: 1,
+                    character_name: "Todd Cunningham",
+                };
+
+                const response = await fetch (`http://127.0.0.1:5280/get-relationship`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+
+            if(!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`)
+            }
+
+            const data = await response.json();
+            setRelationship(data);
+            console.log("relationship data fetched and set", data);
+
+            } catch (error) {
+                console.error('Error fetching relationship:', error.message);
+            }
+        }
+        fetchRelationship();
+    },[])
 
     const geminiFetch = async () => {
         setLoading(true);
@@ -71,6 +105,7 @@ const GeminiTextInput = () => {
                 }}
             >
                 <div className='input-button-container'>
+                    <p>{JSON.stringify(relationship)}</p>
                     <Input 
                     className='textarea'
                     type="textarea" 

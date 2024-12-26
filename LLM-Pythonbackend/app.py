@@ -86,22 +86,23 @@ def check_user():
         return jsonify({"error": "Invalid username or password"}), 401
     
     
-@app.route("/get-relationship", methods=["GET"])
+@app.route("/get-relationship", methods=["POST"])
 def relationship():
     data = request.get_json()
     user_id = data.get("user_id")
     character_name = data.get("character_name", "Todd Cunningham")
+    
     if not user_id:
-        return jsonify({"error": "User ID is requred"}), 400
+        return jsonify({"error": "User ID is required"}), 400
+    
     try: 
         relationship_value = get_relationship_value(user_id, character_name)
         if relationship_value is None:
             return jsonify ({"error": "No relationship found for this user"}), 404
-        return jsonify({"character_name": character_name, "relationship_value": relationship_value}), 200
+        return jsonify({
+            "character_name": character_name, "relationship_value": relationship_value}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-        
-    
     
     
 def parse_evaluation(evaluation_text):
