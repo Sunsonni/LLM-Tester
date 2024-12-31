@@ -49,8 +49,8 @@ def initialize_chat_model():
         "Respond as Todd Cunningham, a trapped individual in a government facility."
         "Craft your reply in dialogue, action, and narrative based on the input provided."
         "Evaluate the user's input based on Todd Cunningham's values and personality."
-        "Assign a rank from 1 to 10 and explain your reasoning in one or two sentences as well as a response to the user's input"
-        "Format your output as: Rank: [1-10] Reason: [Explanation] Response: [Reponse]"
+        "Assign a rank from -10 to 10 and explain your reasoning in one or two sentences as well as a response to the user's input"
+        "Format your output as: Rank: [-10 to 10] Reason: [Explanation] Response: [Reponse]"
     ),
       )
   return model

@@ -7,10 +7,22 @@
 .input-button-container {
     display: flex;
     align-content: center;
+    gap: 20px;
 }
 
 .chat-container {
     flex: 1;
     margin-bottom: 20px;
     overflow-y: auto;
+}
+
+.relationship-indicator {
+    display: inline-block;
+    background-color: lightblue;
+    color: black;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
 }

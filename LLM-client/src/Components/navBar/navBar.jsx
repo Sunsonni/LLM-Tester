@@ -12,6 +12,7 @@ return(
             <a href="/">Home</a>
             <a href="/Input">Input</a>
             <a href="/SignUp">Sign Up</a>
+            <a href="/Login">Login</a>
         </div>
     </div>
 );

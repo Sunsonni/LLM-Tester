@@ -104,19 +104,8 @@
 
 .chat-container {
   flex: 1; /* Take up available space */
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   overflow-y: auto;
-}
-
-.chat-container {
-  flex: 1; /* Take up available space */
-  margin-bottom: 20px;
-  overflow-y: auto;
-}
-
-.input-overlay {
-  padding: 10px;
-  background-color: #f8f9fa;
 }
 
 .input-button-container {
@@ -129,7 +118,6 @@
   flex: 1;
   margin-right: 10px;
 }
-
 
 .input-overlay {
   position: fixed;
@@ -164,7 +152,6 @@
 .input-overlay button:hover {
   background-color: #0056b3;
 }
-
 
 .nav-container {
   display: flex;

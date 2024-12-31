@@ -55,7 +55,7 @@ const GeminiTextInput = () => {
             }
 
             const data = await response.json();
-            setRelationship(data);
+            setRelationship(data.relationship_value);
             console.log("relationship data fetched and set", data);
 
             } catch (error) {
@@ -97,6 +97,7 @@ const GeminiTextInput = () => {
             <div className='chat-container' ref={chatContainerRef}>
                 <h3>Chat</h3>
                <Chat history={history}/>
+
             </div>
             <div className='input-overlay'>
             <Form onSubmit={(e) => {
@@ -105,7 +106,7 @@ const GeminiTextInput = () => {
                 }}
             >
                 <div className='input-button-container'>
-                    <p>{JSON.stringify(relationship)}</p>
+                    <p className='relationship-indicator'>{JSON.stringify(relationship)}</p>
                     <Input 
                     className='textarea'
                     type="textarea" 
@@ -116,7 +117,7 @@ const GeminiTextInput = () => {
                     </Button>
                 </div>
             </Form>
-            </div>
+            </div> 
         </div>
     )
 }

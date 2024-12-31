@@ -2,6 +2,8 @@ import React from 'react';
 import './Chat.css';
 
 const Chat = ({ history }) => {
+    
+
     return (
         <div className="chat-container">
             {history.map((entry, index) => (

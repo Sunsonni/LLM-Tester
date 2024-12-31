@@ -16,13 +16,13 @@ def create_user(username, password, email):
         cursor.close()
         conn.close()
         
-def authenticate_user(username, password):
+def authenticate_user(identifier, password):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     try:
         cursor.execute("""
-        SELECT id, password_hash FROM users WHERE username = %s
-        """, (username,))
+        SELECT id, password_hash FROM users WHERE username = %s or email = %s
+        """, (identifier, identifier))
         user = cursor.fetchone()
         
         if user and bcrypt.checkpw(password.encode('utf-8'), user['password_hash'].encode('utf-8')): return user['id']
