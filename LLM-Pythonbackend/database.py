@@ -26,8 +26,10 @@ def ensure_table_exists():
             CREATE TABLE IF NOT EXISTS chat_history (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 role VARCHAR(50) NOT NULL,
+                user_id INT NOT NULL,
                 parts TEXT NOT NULL,
-                `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             )
         """)
         conn.commit()
@@ -35,12 +37,13 @@ def ensure_table_exists():
         cursor.close()
         conn.close()   
     
-def get_chat_history_from_db():
+def get_chat_history_from_db(user_id):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        
-        cursor.execute("SELECT role, parts FROM chat_history ORDER BY `timestamp` ASC")
+        cursor.execute("""
+                       SELECT role, parts FROM chat_history WHERE user_id = %s ORDER BY `timestamp` ASC
+                    """, (user_id,))
         history = cursor.fetchall()
     
         formatted_history = [
@@ -56,11 +59,11 @@ def get_chat_history_from_db():
         if 'conn' in locals():
             conn.close()
 
-def save_to_chat_history(role, message_parts):
+def save_to_chat_history(user_id, role, message_parts):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO chat_history (role, parts) VALUES (%s, %s)", (role, "|".join(message_parts))
+        "INSERT INTO chat_history (user_id, role, parts) VALUES (%s, %s, %s)", (user_id, role, "|".join(message_parts))
     )
     conn.commit()
     cursor.close()

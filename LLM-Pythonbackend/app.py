@@ -29,7 +29,7 @@ def chat():
         #
         initialize_relationship(user_id)
         #Fetch chat history
-        history = get_chat_history_from_db()
+        history = get_chat_history_from_db(user_id)
         chat_session = model.start_chat(history=history)
         
         #Get evaluation
@@ -41,18 +41,23 @@ def chat():
         update_relationship_value(user_id, rank)
         
         #save user input and model response
-        save_to_chat_history("user", [user_input])
-        save_to_chat_history("model", [evaluation_response.text])
+        save_to_chat_history(user_id, "user", [user_input])
+        save_to_chat_history(user_id, "model", [evaluation_response.text])
         
         #return response as JSON
         return jsonify({"response": evaluation_response.text, "history": history}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
  
-@app.route("/chat-history", methods=["GET"])       
+@app.route("/chat-history", methods=["POST"])       
 def get_chat_history():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    
+    if not user_id:
+        return jsonify({"error": "Missing user_id in request body"})
     try:
-        history = get_chat_history_from_db()
+        history = get_chat_history_from_db(user_id)
         return jsonify({"history": history}),200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
