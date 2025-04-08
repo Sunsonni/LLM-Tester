@@ -10,8 +10,6 @@ const GeminiTextInput = () => {
     const [ history, setHistory ] = useState([]); 
     const [ loading, setLoading ] = useState(false);
     const [ relationship, setRelationship ] = useState(null);
-    const chatContainerRef = useRef(null);
-    const messagesEndRef = useRef(null);
 
 
     useEffect(() => {
@@ -33,13 +31,6 @@ const GeminiTextInput = () => {
         };
         fetchHistory();
     }, []);
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [history]);
-    const scrollToBottom = () => {
-        messagesEndRef.current?.ScrollIntoView({ behavior: "smooth"})
-    }
 
     useEffect(()=> {
         const fetchRelationship = async () => {
@@ -105,7 +96,6 @@ const GeminiTextInput = () => {
             <div className='chat-container'>
                 <h3>Chat</h3>
                <Chat history={history}/>
-                <div ref={chatContainerRef}></div>
             </div>
             <div className='input-overlay'>
             <Form onSubmit={(e) => {
