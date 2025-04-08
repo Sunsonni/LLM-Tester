@@ -1,4 +1,4 @@
-.chat-container {
+/* .chat-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -19,3 +19,34 @@
     align-self: flex-start;
     background-color: #f8d7da;
 }
+ */
+
+ .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    justify-content: flex-end; /* This makes messages stick to bottom */
+  }
+  
+  .chat-message {
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 18px;
+    max-width: 80%;
+    word-wrap: break-word;
+  }
+  
+  .chat-message.user {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+  
+  .chat-message.model {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+    border-bottom-left-radius: 4px;
+  }

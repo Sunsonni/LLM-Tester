@@ -16,6 +16,14 @@
     overflow-y: auto;
 }
 
+.message-container{
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 100%;
+  }
+
 .relationship-indicator {
     display: inline-block;
     background-color: lightblue;

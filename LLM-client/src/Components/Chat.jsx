@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Chat.css';
 
 const Chat = ({ history }) => {
-    
+    const messagesEndRef = useRef(null);
 
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
+    }, [history])
     return (
         <div className="chat-container">
             {history.map((entry, index) => (
@@ -12,6 +15,7 @@ const Chat = ({ history }) => {
                     <div>{entry.parts}</div>
                 </div>
             ))}
+            <div ref={messagesEndRef} />
         </div>
     )
 }
