@@ -52,10 +52,18 @@
   background: #1a1d18;
   color: #33ff33;
 
+  background-image: 
+  repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 1px,
+    rgba(0, 255, 0, 0.05) 1px,
+    rgba(0, 255, 0, 0.05) 2px
+  );
 }
 
 .chat-app.shifted {
-  margin-left: 200px; /* Adjust this value based on the width of the sideNav */
+  margin-left: 200px; 
 }
 
 .chat-header{
@@ -83,6 +91,7 @@
   gap: 8px;
   min-height: 100%;
   justify-content: flex-end;
+ 
   
 }
 
@@ -122,6 +131,21 @@
   resize: none;
   flex: 1;
   margin-right: 10px;
+  background: #0a0a0a !important;
+  color: #33ff33 !important;
+  border: 1px solid #33ff33 !important;
+  font-family: 'Courier New', monospace !important;
+  padding: 8px !important;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.textarea::placeholder {
+  color: #33ff33;
+  opacity: 0.5;
+  animation: blink 1s step-end infinite;
 }
 
 .input-overlay {
