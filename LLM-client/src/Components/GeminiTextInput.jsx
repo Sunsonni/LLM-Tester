@@ -92,13 +92,16 @@ const GeminiTextInput = () => {
         }
     }
     return (
-        <div className={`content-container ${isNavOpen ? 'shifted': ''}`}>
-                <h3 className='chatheader'>Chat</h3>
+        <div className={`chat-app ${isNavOpen ? 'shifted': ''}`}>
 
-                <div className='chat-messages-container'>
-                    <Chat history={history}/>
-                </div>
-                
+            <header className='chat-header'>
+                <h3>Chat</h3>
+            </header>
+            
+            <div className='message-viewport'>
+                <Chat history={history}/>
+            </div>
+
             <div className='input-overlay'>
             <Form onSubmit={(e) => {
                 e.preventDefault(); 
