@@ -96,7 +96,7 @@ def initialize_relationship(user_id, character_name="Todd Cunningham"):
         cursor.execute("""
         INSERT IGNORE INTO relationship_items (user_id, character_name)
         VALUES (%s, %s)
-    """, (user_id, character_name))
+        """, (user_id, character_name))
         conn.commit()
     finally:
         cursor.close()

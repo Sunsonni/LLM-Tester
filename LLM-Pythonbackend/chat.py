@@ -9,7 +9,6 @@ def initialize_chat_model():
   load_dotenv()
 
   key = os.getenv("API_KEY")
-  url = os.getenv("URL")
 
   genai.configure(api_key=key)
 

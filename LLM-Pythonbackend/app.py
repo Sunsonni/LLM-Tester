@@ -22,6 +22,7 @@ def chat():
     user_id = data.get("user_id")
     user_input = data.get("message")
     
+    
     if not user_id or not user_input or not user_input.strip():
         return jsonify({"Error" : "Message is required"}), 400
     
