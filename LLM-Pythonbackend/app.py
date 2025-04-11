@@ -17,7 +17,7 @@ CORS(app, origins=["http://localhost:5173"])
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    #parse user input from the resquest
+    #parse user input from the request
     data = request.get_json()
     user_id = data.get("user_id")
     user_input = data.get("message")
@@ -118,7 +118,7 @@ def relationship():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-    
+
 def parse_evaluation(evaluation_text):
     rank_match = re.search(r"Rank: (-?\d+)", evaluation_text)
     reason_match = re.search(r"Reason: (.+)", evaluation_text)
